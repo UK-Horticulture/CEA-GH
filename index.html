@@ -200,26 +200,7 @@
         <p>Map <b>resources can be turned on and off</b> by type in the <b>legend at the top right</b>, which will appear after bringing the mouse to or tapping on the <b>Map Layer Icon</b> -> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <img src="images/layers.png"> </p><br>
         <!-- <p>The <b>search box</b> allows users to enter a physical address, city name, or zipcode to <b>place a marker</b>.</p><br> -->
         <h2>Data Sources</h2><br>
-      <p>The primary data source is the <a href="https://agpolicy.ky.gov/Pages/default.aspx" target="_blank">Governor's
-        Office of Agricultural Policy</a> and the <a href="http://www.kyagr.com/" target="blank">Kentucky Department of Agriculture</a>.<br><br>
-        <h3>&nbsp; &nbsp; &nbsp;Specific Dataset Information</h3>
-        <ul>
-          <li><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<b>Community and Commercial Kitchens</b> - provided by Kentucky Horticulture Council, March 2019</li>
-          <li><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<b>UK Resources, Cooperative Extension Offices</b> - provided by University of Kentucky, September 2019</li>
-          <li><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<b>County Conservation District Offices</b> - provided by Kentucky Energy and Environment Cabinet, September 2019 <a href="https://eec.ky.gov/" target="_blank"><img src="info-tiny.png"></a></li>
-          <li><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<b>Shared Equipment</b> - data provided by KY-GOAP and the Kentucky Horticulture Council, August 2019 <a href="https://agpolicy.ky.gov/funds/Pages/program-portal.aspx" target="_blank"><img src="info-tiny.png"></a></li>
-          <li><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<b>USDA-NRCS Offices</b> - data provided by USDA-NRCS, July 2019 <a href="https://www.nrcs.usda.gov/" target="_blank"><img src="info-tiny.png"></a></li>
-          <li><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<b>Business Development Resource</b> - data provided by Kentucky Center for Agriculture and Rural Development <a href="https://kcard.info/" target="_blank"><img src="info-tiny.png"></a>
-        </ul><br>
-        </p>
-        <p><h2>Funding and Support</h2><br><center>
-          <a href="https://agpolicy.ky.gov/board/Pages/default.aspx" target="_blank"><img src="images/kadf-logo-footer.gif" hspace="20" vspace="20" border="5"></a>
-           &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-           <a href="http://kyhortcouncil.org/" target="_blank"><img src="images/khc-logo-footer.jpg" width="185" height="110" hspace="20" vspace="20" border="5"></a>
-          </center>
-        </p>
-        <p><br>
-        Funding and support for this project provided by the <a href="https://agpolicy.ky.gov/board/Pages/default.aspx" target="_blank">Kentucky Agricultural
+        <p>Funding and support for this project provided by the <a href="https://agpolicy.ky.gov/board/Pages/default.aspx" target="_blank">Kentucky Agricultural
           Development Board</a> through the <a href="http://kyhortcouncil.org/" target="_blank">
             Kentucky Horticulture Council</a>.</p>
       <p><br>Map developed and maintained by <br><br><a href="mailto:joshua.knight@uky.edu">
@@ -259,47 +240,45 @@
     var accessToken = 'pk.eyJ1Ijoia29uc29sdXMiLCJhIjoiY2pnd2d2dXJrMTk4MzMzcGRmNjl6enpmYyJ9.MC43t60Y6axGbi32YET_tA'
 
   // request a mapbox raster tile layer and add to map
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + accessToken, {
-      maxZoom: 18,
-      id: 'mapbox.light',
-      accessToken: accessToken
+    L.tileLayer('https://stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png' , {
+      maxZoom: 20
     }).addTo(map);
 
   // set display style for county polygons
     var countyStyle = {
-        "color": "#057e5c",
-        "weight": .75,
-        "fillOpacity" : 0.01,
-        "opacity": 0.2
+        "color": "#00823f",
+        "weight": 2,
+        "fillOpacity" : 0.05,
+        "opacity": 0.8
     };
 
     // set icons for layer types
-    var CESIcon = L.icon({
-        iconUrl: "./icons/CESicon.png",
+    var kypgrowerIcon = L.icon({
+        iconUrl: "./icons/kypgrowericon.png",
         iconSize: [35, 35],
         popupAnchor: [0, -15]
     });
 
-    var equipmentIcon = L.icon({
-        iconUrl: "./icons/equipment.png",
+    var koapIcon = L.icon({
+        iconUrl: "./icons/koap.png",
         iconSize: [35, 25],
         popupAnchor: [0, -15]
     });
 
-    var NRCSIcon = L.icon({
-        iconUrl: "./icons/NRCS.png",
+    var agffaIcon = L.icon({
+        iconUrl: "./icons/agffa.png",
         iconSize: [35, 35],
         popupAnchor: [0, -15]
     });
 
-    var conservationIcon = L.icon({
-        iconUrl: "./icons/conservation.png",
+    var kynurserylicenseIcon = L.icon({
+        iconUrl: "./icons/kynurserylicense.png",
         iconSize: [35, 35],
         popupAnchor: [0, -15]
     });
 
-    var kitchenIcon = L.icon({
-        iconUrl: "./icons/kitchen.png",
+    var kypproductsIcon = L.icon({
+        iconUrl: "./icons/kypproducts.png",
         iconSize: [35, 35],
         popupAnchor: [0, -15]
     });
@@ -316,8 +295,8 @@
         popupAnchor: [0, -15]
     });
 
-    var BusDevIcon = L.icon({
-        iconUrl: "./icons/BusDev.png",
+    var kgadirectoryIcon = L.icon({
+        iconUrl: "./icons/kgadirectory.png",
         iconSize: [35, 35],
         popupAnchor: [0, -15]
     });
@@ -326,7 +305,7 @@
   $.getJSON("./data/ky-counties.geojson", function(counties) {
 
         // load CSV file
-        omnivore.csv('data/service_provider_data_geo.csv')
+        omnivore.csv('data/KGM_geocoded.csv')
         .on('ready', function(e) {
             console.log(e.target);
             drawMap(e.target.toGeoJSON());
@@ -342,145 +321,114 @@
 
     // create layer groups by resource type
 
-    var CESLayer = L.geoJson(data, {
-      filter: CESFilter,
+    var kypgrowerLayer = L.geoJson(data, {
+      filter: kypgrowerFilter,
       pointToLayer: function(feature,latlng) {
-          return L.marker(latlng, {icon: CESIcon});
+          return L.marker(latlng, {icon: kypgrowerIcon});
         },
         onEachFeature : function(feature,layer) {
           var props = feature.properties;
           var locationPopup =
-            "<h2>" + props.resource_type + "<br>District " + props.contact_2 + "</h2>" + "<b>" + props.org_name + "</b>" +
-            "<p>" + props.address + "<br><br><b>Contact Information:  <br></b>" + props.phone + " (Phone)<br>" + props.email + " (Fax)</p></p>";
+            "<h2>Data Source:<br>"+ props.Data_Source + "<br></h2>" + props.County + " County<br><br>" + "<b>" + props.Organization + "<br></b>"
+            + props.Last_known_Address + "<br><br><b>Contact Information:  <br>" + props.Last_Known_Contact_Name + "<br></b>" + props.Phone + "<br>" + props.Email + "<br>" + props.Web +
+            "<br>Status:  <font color='red'><b>" + props.Status__2023_ + "</p></p>";
             layer.bindPopup(locationPopup);
           }
       }).addTo(map);
 
-    var conservationLayer = L.geoJson(data, {
-      filter: conservationFilter,
+    var kynurserylicenseLayer = L.geoJson(data, {
+      filter: kynurserylicenseFilter,
       pointToLayer: function(feature,latlng) {
-          return L.marker(latlng, {icon: conservationIcon});
+          return L.marker(latlng, {icon: kynurserylicenseIcon});
         },
         onEachFeature : function(feature,layer) {
           var props = feature.properties;
           var locationPopup =
-            "<h2>County Conservation Office<br>District " + props.contact_2 + "</h2>" + "<b>" + props.org_name + "</b>" +
-            "<p>" + props.address + "<br><br><b>Contact Information:  <br></b>" + props.phone + " (Phone)<br>" +
-            props.email + " (Fax)<br><a href='" + props.contact_1 + "'>Office Information Details</a><br><a href='" + props.optional_1 + "'>" + props.optional_1 + "</a></p></p>";
+            "<h2>Data Source:<br>"+ props.Data_Source + "<br></h2>" + props.County + " County<br><br>" + "<b>" + props.Organization + "<br></b>"
+            + props.Last_known_Address + "<br><br><b>Contact Information:  <br>" + props.Last_Known_Contact_Name + "<br></b>" + props.Phone + "<br>" + props.Email + "<br>" + props.Web +
+            "<br>Status:  <font color='red'><b>" + props.Status__2023_ + "</p></p>";
             layer.bindPopup(locationPopup);
         }
       }).addTo(map);
 
-    var equipmentLayer = L.geoJson(data, {
-      filter: equipmentFilter,
+    var koapLayer = L.geoJson(data, {
+      filter: koapFilter,
         pointToLayer: function(feature,latlng) {
-            return L.marker(latlng, {icon: equipmentIcon});
+            return L.marker(latlng, {icon: koapIcon});
           },
           onEachFeature : function(feature,layer) {
             var props = feature.properties;
             var locationPopup =
-              "<h2>" + props.resource_type + "</h2>" +  props.optional_1 + "<br><b>" + props.org_name + "</b>" +
-              "<p>" + props.address + "<br><br><b>Contact Information:  <br></b>" + props.contact_1 + "<br>" +
-              props.contact_2 + "<br>" + props.phone + "<br><a href='mailto:" + props.email + "'>" + props.email + "</a></p></p>";
-              layer.bindPopup(locationPopup)
+             "<h2>Data Source:<br>"+ props.Data_Source + "<br></h2>" + props.County + " County<br><br>" + "<b>" + props.Organization + "<br></b>"
+             + props.Last_known_Address + "<br><br><b>Contact Information:  <br>" + props.Last_Known_Contact_Name + "<br></b>" + props.Phone + "<br>" + props.Email + "<br>" + props.Web +
+             "<br>Status:  <font color='red'><b>" + props.Status__2023_ + "</p></p>";
+             layer.bindPopup(locationPopup);
           }
       }).addTo(map);
 
-      var NRCSLayer = L.geoJson(data, {
-        filter: NRCSFilter,
+      var agffaLayer = L.geoJson(data, {
+        filter: agffaFilter,
           pointToLayer: function(feature,latlng) {
-              return L.marker(latlng, {icon: NRCSIcon});
+              return L.marker(latlng, {icon: agffaIcon});
             },
             onEachFeature : function(feature,layer) {
               var props = feature.properties;
               var locationPopup =
-                "<h2>USDA<br>Natural Resource Conservation Service</h2><b><br>" + props.org_name + "</b>" +
-                "<p>" + props.address + "<br><br><b>Contact Information:  <br></b>" + props.phone + "</p></p>";
-                layer.bindPopup(locationPopup)
+               "<h2>Data Source:<br>"+ props.Data_Source + "<br></h2>" + props.County + " County<br><br>" + "<b>" + props.Organization + "<br></b>"
+               + props.Last_known_Address + "<br><br><b>Contact Information:  <br>" + props.Last_Known_Contact_Name + "<br></b>" + props.Phone + "<br>" + props.Email + "<br>" + props.Web +
+               "<br>Status:  <font color='red'><b>" + props.Status__2023_ + "</p></p>";
+               layer.bindPopup(locationPopup);
             }
         }).addTo(map);
 
-        var kitchenLayer = L.geoJson(data, {
-          filter: kitchenFilter,
+        var kypproductsLayer = L.geoJson(data, {
+          filter: kypproductsFilter,
             pointToLayer: function(feature,latlng) {
-                return L.marker(latlng, {icon: kitchenIcon});
+                return L.marker(latlng, {icon: kypproductsIcon});
               },
               onEachFeature : function(feature,layer) {
                 var props = feature.properties;
                 var locationPopup =
-                "<h2>" + props.resource_type + "</h2><b>" + props.org_name + "</b><br><p>" + props.address +
-                "<br><br><b>Contact Information:  <br></b>" + props.contact_1 + "<br>" + props.phone + "<br><a href='mailto:" + props.email + "'>" + props.email
-                + "</a><br><a href='" + props.optional_1 + "'>" + props.optional_1 + "</a></p></p>";
-                  layer.bindPopup(locationPopup)
+                  "<h2>Data Source:<br>"+ props.Data_Source + "<br></h2>" + props.County + " County<br><br>" + "<b>" + props.Organization + "<br></b>"
+                  + props.Last_known_Address + "<br><br><b>Contact Information:  <br>" + props.Last_Known_Contact_Name + "<br></b>" + props.Phone + "<br>" + props.Email + "<br>" + props.Web +
+                  "<br>Status:  <font color='red'><b>" + props.Status__2023_ + "</p></p>";
+                  layer.bindPopup(locationPopup);
               }
           }).addTo(map);
 
-          var KSULayer = L.geoJson(data, {
-            filter: KSUFilter,
-              pointToLayer: function(feature,latlng) {
-                  return L.marker(latlng, {icon: KSUIcon});
-                },
-                onEachFeature : function(feature,layer) {
-                  var props = feature.properties;
-                  var locationPopup =
-                    "<h2>" + props.resource_type + "</h2><br><b>" + props.org_name + "</b>" +
-                    "<p>" + props.address + "<br><br><b>Contact Information:  <br></b>" + props.phone +
-                    "<br><a href='http://" + props.optional_1 + "'>" +
-                    props.optional_1 + "</a></p></p>";
-                    layer.bindPopup(locationPopup)
-                }
-            }).addTo(map);
-
-            var UKLayer = L.geoJson(data, {
-              filter: UKFilter,
-                pointToLayer: function(feature,latlng) {
-                    return L.marker(latlng, {icon: UKIcon});
-                  },
-                  onEachFeature : function(feature,layer) {
-                    var props = feature.properties;
-                    var locationPopup =
-                      "<h2>" + props.resource_type + "</h2><br><b>" + props.org_name + "</b>" +
-                      "<p>" + props.address + "<br><br><b>Contact Information:  <br></b>" + props.phone + "<br><br><a href='http://" + props.optional_1 + "'>" + props.optional_1 + "</a><br><a href='mailto:" + props.email + "'>" + props.email + "</a></p></p>";
-                      layer.bindPopup(locationPopup)
-                  }
-              }).addTo(map);
-
-              var BusDevLayer = L.geoJson(data, {
-                filter: BusDevFilter,
+              var kgadirectoryLayer = L.geoJson(data, {
+                filter: kgadirectoryFilter,
                   pointToLayer: function(feature,latlng) {
-                      return L.marker(latlng, {icon: BusDevIcon});
+                      return L.marker(latlng, {icon: kgadirectoryIcon});
                     },
                     onEachFeature : function(feature,layer) {
                       var props = feature.properties;
                       var locationPopup =
-                        "<h2>" + props.resource_type + "</h2><br><b>" + props.org_name + "</b><br><br>" + props.address + "<br><br><b>Contact Information:  <br></b></b>" + props.phone
-                        + "<br><a href='mailto:" + props.email + "'>" + props.email + "</a><br><a href='" + props.optional_1 + "'>" + props.optional_1 + "</a></p>";
-                        layer.bindPopup(locationPopup)
+                        "<h2>Data Source:<br>"+ props.Data_Source + "<br></h2>" + props.County + " County<br><br>" + "<b>" + props.Organization + "<br></b>"
+                        + props.Last_known_Address + "<br><br><b>Contact Information:  <br>" + props.Last_Known_Contact_Name + "<br></b>" + props.Phone + "<br>" + props.Email + "<br>" + props.Web +
+                        "<br>Status:  <font color='red'><b>" + props.Status__2023_ + "</p></p>";
+                        layer.bindPopup(locationPopup);
                     }
                 }).addTo(map);
 
     // create object of all layers
     var geoJsonLayers = {
-          CESLayer: CESLayer,
-          conservationLayer: conservationLayer,
-          equipmentLayer: equipmentLayer,
-          NRCSLayer: NRCSLayer,
-          kitchenLayer: kitchenLayer,
-          BusDevLayer: BusDevLayer,
-          KSULayer: KSULayer,
-          UKLayer: UKLayer,
+          kypgrowerLayer: kypgrowerLayer,
+          kypproductsLayer: kypproductsLayer,
+          kynurserylicenseLayer: kynurserylicenseLayer,
+          koapLayer: koapLayer,
+          agffaLayer: agffaLayer,
+          kgadirectoryLayer: kgadirectoryLayer,
     };
 
     // legend for turning on/off layers
     var sourcesLabels = {
-      "<img src='icons/conservation.png' height='35' width='35'><b>&nbsp;Conservation District Office</b>": geoJsonLayers.conservationLayer,
-      "<img src='icons/CESicon.png' height='34' width='35'><b>&nbsp;Cooperative Extension Office</b>": geoJsonLayers.CESLayer,
-      "<img src='icons/NRCS.png' height='34' width='35'><b>&nbsp;USDA-NRCS Office</b>": geoJsonLayers.NRCSLayer,
-      "<img src='icons/equipment.png' height='29' width='39'><b>&nbsp;Shared Equipment</b><br><br>": geoJsonLayers.equipmentLayer,
-      "<img src='icons/kitchen.png' height='39' width='39'><b>&nbsp;Community / Commercial Kitchen</b>": geoJsonLayers.kitchenLayer,
-      "<img src='icons/BusDev.png' height='39' width='39'><b>&nbsp;Business Development Resource</b>": geoJsonLayers.BusDevLayer,
-      "<img src='icons/KSU.png' height='36' width='36'><b>&nbsp;Kentucky State University Resource</b>": geoJsonLayers.KSULayer,
-      "<img src='icons/UK.png' height='36' width='36'><b>&nbsp;University of Kentucky Resource</b>": geoJsonLayers.UKLayer,
+      "<img src='icons/kynurserylicense.png' height='35' width='35'><b>&nbsp;Kentucky Nursery Licenses 2021</b>": geoJsonLayers.kynurserylicenseLayer,
+      "<img src='icons/kypgrowericon.png' height='34' width='35'><b>&nbsp;Kentucky Proud Greenhouse Growers 2021</b>": geoJsonLayers.kypgrowerLayer,
+      "<img src='icons/agffa.png' height='34' width='35'><b>&nbsp;Ag FFA Instructors, POWER counties</b>": geoJsonLayers.agffaLayer,
+      "<img src='icons/koap.png' height='29' width='39'><b>&nbsp;Shared KOAP Open Record Request Greenhouses</b><br><br>": geoJsonLayers.koapLayer,
+      "<img src='icons/kypproducts.png' height='39' width='39'><b>&nbsp;Kentucky Pround Greenhouse Products 2021</b>": geoJsonLayers.kypproductsLayer,
+      "<img src='icons/kgadirectory.png' height='39' width='39'><b>&nbsp;KGA Commercial Directory</b>": geoJsonLayers.kgadirectoryLayer,
     };
 
     L.control.layers(null, sourcesLabels, { collapsed:true }).addTo(map);
@@ -508,36 +456,32 @@
 
 
     // filtering functions for creating multiple layers from single geojson
-    function conservationFilter(feature) {
-      if (feature.properties.resource_type === "County Conservation District Office") return true
+    function kypgrowerFilter(feature) {
+      if (feature.properties.Data_Source === "Kentucky Proud Greenhouse Growers 2021") return true
     }
 
-    function equipmentFilter(feature) {
-      if (feature.properties.resource_type === "Shared Equipment") return true
+    function kynurserylicenseFilter(feature) {
+      if (feature.properties.Data_Source === "Kentucky Nursery Licenses 2021-2022") return true
     }
 
-    function NRCSFilter(feature) {
-      if (feature.properties.resource_type === "NRCS Office") return true
+    function agffaFilter(feature) {
+      if (feature.properties.Data_Source === "Ag FFA Instructors, POWER counties") return true
     }
 
-    function CESFilter(feature) {
-      if (feature.properties.resource_type === "Cooperative Extension Office") return true
+    function koapFilter(feature) {
+      if (feature.properties.Data_Source === "KOAP Open Record Req. GHs") return true
     }
 
-    function kitchenFilter(feature) {
-      if (feature.properties.resource_type === "Community / Commercial Kitchen") return true
+    function kypproductsFilter(feature) {
+      if (feature.properties.Data_Source === "Kentucky Proud Greenhouse Products 2021") return true
     }
 
-    function KSUFilter(feature) {
-      if (feature.properties.resource_type === "Kentucky State University Resource") return true
+    function kgadirectoryFilter(feature) {
+      if (feature.properties.Data_Source === "KGA Commercial Directory") return true
     }
 
-    function UKFilter(feature) {
-      if (feature.properties.resource_type === "University of Kentucky Resource") return true
-    }
-
-    function BusDevFilter(feature) {
-      if (feature.properties.resource_type === "Business Development Resource") return true
+    function kgadirectoryFilter(feature) {
+      if (feature.properties.Data_Source === "Business Development Resource") return true
     }
 
   } // end drawMap()
