@@ -253,49 +253,37 @@
     // set icons for layer types
     var kypgrowerIcon = L.icon({
         iconUrl: "./icons/kypgrowericon.png",
-        iconSize: [35, 35],
+        iconSize: [40, 40],
         popupAnchor: [0, -15]
     });
 
     var koapIcon = L.icon({
         iconUrl: "./icons/koap.png",
-        iconSize: [35, 25],
+        iconSize: [40, 40],
         popupAnchor: [0, -15]
     });
 
     var agffaIcon = L.icon({
         iconUrl: "./icons/agffa.png",
-        iconSize: [35, 35],
+        iconSize: [40, 40],
         popupAnchor: [0, -15]
     });
 
     var kynurserylicenseIcon = L.icon({
         iconUrl: "./icons/kynurserylicense.png",
-        iconSize: [35, 35],
+        iconSize: [40, 40],
         popupAnchor: [0, -15]
     });
 
     var kypproductsIcon = L.icon({
         iconUrl: "./icons/kypproducts.png",
-        iconSize: [35, 35],
-        popupAnchor: [0, -15]
-    });
-
-    var KSUIcon = L.icon({
-        iconUrl: "./icons/KSU.png",
-        iconSize: [35, 35],
-        popupAnchor: [0, -15]
-    });
-
-    var UKIcon = L.icon({
-        iconUrl: "./icons/UK.png",
-        iconSize: [35, 35],
+        iconSize: [40, 40],
         popupAnchor: [0, -15]
     });
 
     var kgadirectoryIcon = L.icon({
         iconUrl: "./icons/kgadirectory.png",
-        iconSize: [35, 35],
+        iconSize: [40, 40],
         popupAnchor: [0, -15]
     });
 
@@ -421,12 +409,12 @@
 
     // legend for turning on/off layers
     var sourcesLabels = {
-      "<img src='icons/kynurserylicense.png' height='35' width='35'><b>&nbsp;Kentucky Nursery Licenses 2021</b>": geoJsonLayers.kynurserylicenseLayer,
-      "<img src='icons/kypgrowericon.png' height='34' width='35'><b>&nbsp;Kentucky Proud Greenhouse Growers 2021</b>": geoJsonLayers.kypgrowerLayer,
-      "<img src='icons/agffa.png' height='34' width='35'><b>&nbsp;Ag FFA Instructors, POWER counties</b>": geoJsonLayers.agffaLayer,
-      "<img src='icons/koap.png' height='29' width='39'><b>&nbsp;Shared KOAP Open Record Request Greenhouses</b><br><br>": geoJsonLayers.koapLayer,
-      "<img src='icons/kypproducts.png' height='39' width='39'><b>&nbsp;Kentucky Pround Greenhouse Products 2021</b>": geoJsonLayers.kypproductsLayer,
-      "<img src='icons/kgadirectory.png' height='39' width='39'><b>&nbsp;KGA Commercial Directory</b>": geoJsonLayers.kgadirectoryLayer,
+      "<img src='icons/kynurserylicense.png' height='40' width='40'><b>&nbsp;Kentucky Nursery Licenses 2021</b>": geoJsonLayers.kynurserylicenseLayer,
+      "<img src='icons/kypgrowericon.png' height='40' width='40'><b>&nbsp;Kentucky Proud Greenhouse Growers 2021</b>": geoJsonLayers.kypgrowerLayer,
+      "<img src='icons/kypproducts.png' height='40' width='40'><b>&nbsp;Kentucky Pround Greenhouse Products 2021</b>": geoJsonLayers.kypproductsLayer,
+      "<img src='icons/agffa.png' height='40' width='40'><b>&nbsp;Ag FFA Instructors, POWER counties</b>": geoJsonLayers.agffaLayer,
+      "<img src='icons/koap.png' height='40' width='40'><b>&nbsp;Shared KOAP Open Record Request Greenhouses</b><br><br>": geoJsonLayers.koapLayer,
+      "<img src='icons/kgadirectory.png' height='40' width='40'><b>&nbsp;KGA Commercial Directory</b>": geoJsonLayers.kgadirectoryLayer,
     };
 
     L.control.layers(null, sourcesLabels, { collapsed:true }).addTo(map);
