@@ -232,29 +232,41 @@
       bounds = L.latLngBounds(southWest, northEast);
 
   var map = L.map('map', {
-      zoomSnap: .05,
+      zoomSnap: 0,
       center: [37.839333, -85.7],
       maxBounds: bounds,
       zoom: 7.5,
       minZoom: 6.5,
-      maxZoom: 18,
+      maxZoom: 15,
     });
 
   // mapbox API access Token
     var accessToken = 'pk.eyJ1Ijoia29uc29sdXMiLCJhIjoiY2pnd2d2dXJrMTk4MzMzcGRmNjl6enpmYyJ9.MC43t60Y6axGbi32YET_tA'
 
   // request a mapbox raster tile layer and add to map
-    L.tileLayer('https://stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png' , {
-      maxZoom: 20
+    L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}', {
+	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+	subdomains: 'abcd',
+     maxNativeZoom: 15,
+	ext: 'png'
     }).addTo(map);
 
-    var simpleTile = L.tileLayer('https://stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png' , {
-     maxZoom: 20
+    L.control.scale({
+         maxWidth: 300,
+         position: 'bottomright',
+         metric: false
+    }).addTo(map);
+
+    var simpleTile = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}', {
+	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+	subdomains: 'abcd',
+     maxNativeZoom: 15,
+	ext: 'png'
      });
 
     var terrainTile = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
 	attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC',
-	maxZoom: 16
+     maxNativeZoom: 15,
      });
 
   // set display style for county polygons
