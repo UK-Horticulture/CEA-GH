@@ -149,7 +149,7 @@
   .leaflet-control-layers-selector {
     margin-top: 2px;
     position: relative;
-    top: 14px;
+    top: 0px;
   }
 
 
@@ -256,11 +256,6 @@
 	attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC',
 	maxZoom: 16
      });
-
-    // var baseMaps = {
-    //      "simple" = simpleTile,
-    //      "terrain" = terrainTile
-    // };
 
   // set display style for county polygons
     var countyStyle = {
@@ -427,17 +422,22 @@
           kgadirectoryLayer: kgadirectoryLayer,
     };
 
-    // legend for turning on/off layers
-    var sourcesLabels = {
-      "<img src='icons/kynurserylicense.png' height='40' width='40'><b>&nbsp;Kentucky Nursery Licenses 2021</b>": geoJsonLayers.kynurserylicenseLayer,
-      "<img src='icons/kypgrowericon.png' height='40' width='40'><b>&nbsp;Kentucky Proud Greenhouse Growers 2021</b>": geoJsonLayers.kypgrowerLayer,
-      "<img src='icons/kypproducts.png' height='40' width='40'><b>&nbsp;Kentucky Pround Greenhouse Products 2021</b>": geoJsonLayers.kypproductsLayer,
-      "<img src='icons/agffa.png' height='40' width='40'><b>&nbsp;Ag FFA Instructors, POWER counties</b>": geoJsonLayers.agffaLayer,
-      "<img src='icons/koap.png' height='40' width='40'><b>&nbsp;Shared KOAP Open Record Request Greenhouses</b><br><br>": geoJsonLayers.koapLayer,
-      "<img src='icons/kgadirectory.png' height='40' width='40'><b>&nbsp;KGA Commercial Directory</b>": geoJsonLayers.kgadirectoryLayer,
+    var baseMaps = {
+         "<b>&#9;Simple Black & White</b>" : simpleTile,
+         "<b>&#9;USGS Terrain</b>" : terrainTile
     };
 
-    L.control.layers(null, sourcesLabels, { collapsed:true }).addTo(map);
+    // legend for turning on/off layers
+    var sourcesLabels = {
+      "<img src='icons/kynurserylicense.png' height='20' width='20'><b>&nbsp;Kentucky Nursery Licenses 2021</b>": geoJsonLayers.kynurserylicenseLayer,
+      "<img src='icons/kypgrowericon.png' height='20' width='20'><b>&nbsp;Kentucky Proud Greenhouse Growers 2021</b>": geoJsonLayers.kypgrowerLayer,
+      "<img src='icons/kypproducts.png' height='20' width='20'><b>&nbsp;Kentucky Pround Greenhouse Products 2021</b>": geoJsonLayers.kypproductsLayer,
+      "<img src='icons/agffa.png' height='20' width='20'><b>&nbsp;Ag FFA Instructors, POWER counties</b>": geoJsonLayers.agffaLayer,
+      "<img src='icons/koap.png' height='20' width='20'><b>&nbsp;Shared KOAP Open Record Request Greenhouses</b><br>": geoJsonLayers.koapLayer,
+      "<img src='icons/kgadirectory.png' height='20' width='20'><b>&nbsp;KGA Commercial Directory</b>": geoJsonLayers.kgadirectoryLayer,
+    };
+
+    L.control.layers(baseMaps, sourcesLabels, { collapsed:true }).addTo(map);
 
     // info modal code
     var modal = document.getElementById('myModal');
