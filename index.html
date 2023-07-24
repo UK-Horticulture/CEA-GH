@@ -248,6 +248,20 @@
       maxZoom: 20
     }).addTo(map);
 
+    var simpleTile = L.tileLayer('https://stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png' , {
+     maxZoom: 20
+     });
+
+    var terrainTile = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC',
+	maxZoom: 16
+     });
+
+    // var baseMaps = {
+    //      "simple" = simpleTile,
+    //      "terrain" = terrainTile
+    // };
+
   // set display style for county polygons
     var countyStyle = {
         "color": "#00823f",
@@ -470,10 +484,6 @@
 
     function kgadirectoryFilter(feature) {
       if (feature.properties.Data_Source === "KGA Commercial Directory") return true
-    }
-
-    function kgadirectoryFilter(feature) {
-      if (feature.properties.Data_Source === "Business Development Resource") return true
     }
 
   } // end drawMap()
