@@ -164,9 +164,9 @@
       font-size: 115%;
   }
   h3 {
-      color: #005d7e;
+      color: #0390fc;
       font-weight: bold;
-      font-size: 105%;
+      font-size: 115%;
   }
   a {
       color: #005d7e;
@@ -267,11 +267,18 @@
 
   // set display style for county polygons
     var countyStyle = {
-        "color": "#00823f",
+        "color": "#000000",
         "weight": 2,
         "fillOpacity" : 0.05,
         "opacity": 0.8
     };
+
+    var arcStyle = {
+        "color": "#0390fc",
+        "weight": 2,
+        "fillOpacity" : 0.1,
+        "opacity": 0.8
+    }
 
     // set icons for layer types
     var kypgrowerIcon = L.icon({
@@ -311,12 +318,11 @@
     });
 
     // load KY county polygons
-  $.getJSON("./data/ky-counties.geojson", function(counties) {
-
+  $.getJSON("./data/ky-counties-arc.geojson", function(counties) {
         // load CSV file
         omnivore.csv('data/KGM_geocoded.csv')
         .on('ready', function(e) {
-            console.log(e.target);
+            // console.log(e.target);
             drawMap(e.target.toGeoJSON());
             addDataToMap(counties, countyStyle, map);
         })
@@ -500,7 +506,16 @@
       var dataLayer = L.geoJson(data, {
         style: style,
         onEachFeature: function (feature, layer) {
-              layer.bindTooltip("<h2>" + feature.properties.name + " County</h2>");
+             console.log(feature.properties.ARC_Status);
+             if (feature.properties.ARC_Status == null) {
+                  layer.bindTooltip("<h2>" + feature.properties.NAME + " County</h2>");
+             } else {
+                  layer.bindTooltip("<h3>" + feature.properties.NAME + " County<br>ARC County</h3>");
+                  layer.setStyle({
+                       "color": "#0390fc",
+                       "fillOpacity" : 0.1                       
+                  });
+          }
         }
       });
       dataLayer.addTo(map);
