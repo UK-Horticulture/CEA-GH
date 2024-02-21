@@ -22,7 +22,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
   <style>
   #map {
-    background: #448ee4;
+    background: #ffffff;
     width: 100%;
   }
   #title {
@@ -154,19 +154,19 @@
 
 
   h1 {
-    color: #005d7e;
+    color: #008c4d;
     font-weight: bold;
-    font-size: 125%;
+    font-size: 150%;
   }
   h2 {
-      color: #005d7e;
+      color: #008c4d;
       font-weight: bold;
-      font-size: 115%;
+      font-size: 125%;
   }
   h3 {
-      color: #0390fc;
+      color: #008c4d;
       font-weight: bold;
-      font-size: 115%;
+      font-size: 105%;
   }
   a {
       color: #005d7e;
@@ -203,11 +203,13 @@
         <h2>Using This Map</h2><br>
         <p><b>Clicking/tapping</b> an icon on the map shows shows detail.</p><br>
         <p>The +/- buttons at the top left <b>zoom in and out</b>, as does the mouse wheel, and standard mobile gestures.</p><br>
-        <p>Map <b>resources can be turned on and off</b> by type in the <b>legend at the top right</b>, which will appear after bringing the mouse to or tapping on the <b>Map Layer Icon</b> -> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <img src="images/layers.png"> </p><br>
+        <p>Map <b>resources can be turned on and off</b> by type in the <b>legend at the top right</b>,
+             which will appear after bringing the mouse to or tapping on the <b>Map Layer Icon</b>
+          <p align="right" border-style="solid"><img alt="Map Layer Icon" src="images/layers.png"><br>Figure 1. Map Layer Icon</p><br>
         <!-- <p>The <b>search box</b> allows users to enter a physical address, city name, or zipcode to <b>place a marker</b>.</p><br> -->
         <h2>Data Sources</h2><br>
         <p>Funding and support for this project provided by the <a href="https://agpolicy.ky.gov/board/Pages/default.aspx" target="_blank">Kentucky Agricultural
-          Development Board</a> through the <a href="http://kyhortcouncil.org/" target="_blank">
+          Development Board</a> and the <a href="http://kyhortcouncil.org/" target="_blank">
             Kentucky Horticulture Council</a>.</p>
       <p><br>Map developed and maintained by <br><br>
         <a href="http://www.uky.edu/hort/">Department of Horticulture</a><br>
@@ -225,6 +227,7 @@
   <script src="js/leaflet-providers.js"></script>
   <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
   <script src="https://rawgit.com/MarcChasse/leaflet.ScaleFactor/master/leaflet.scalefactor.min.js"></script>
+
   <script>
 
   // initialize map, centered on KY
@@ -241,24 +244,21 @@
       maxZoom: 15,
     });
 
-  // mapbox API access Token
-    var accessToken = 'pk.eyJ1Ijoia29uc29sdXMiLCJhIjoiY2pnd2d2dXJrMTk4MzMzcGRmNjl6enpmYyJ9.MC43t60Y6axGbi32YET_tA'
-
   // request a mapbox raster tile layer and add to map
-     L.tileLayer.provider('USGS.USTopo').addTo(map);
+     // L.tileLayer.provider('USGS.USTopo').addTo(map);
 
-    L.control.scale({
+     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC',
+     maxNativeZoom: 15,
+     }).addTo(map);
+
+     L.control.scale({
          maxWidth: 300,
          position: 'bottomright',
          metric: false
     }).addTo(map);
 
-    var simpleTile = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}', {
-	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-	subdomains: 'abcd',
-     maxNativeZoom: 15,
-	ext: 'png'
-     });
+    var simpleTile = L.tileLayer.provider('USGS.USTopo');
 
     var terrainTile = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
 	attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC',
@@ -269,50 +269,25 @@
     var countyStyle = {
         "color": "#000000",
         "weight": 2,
-        "fillOpacity" : 0.05,
-        "opacity": 0.8
+        "fillOpacity" : 0.00,
+        "opacity": 1
     };
 
-    var arcStyle = {
-        "color": "#0390fc",
-        "weight": 2,
-        "fillOpacity" : 0.1,
-        "opacity": 0.8
-    }
-
     // set icons for layer types
-    var kypgrowerIcon = L.icon({
-        iconUrl: "./icons/kypgrowericon.png",
-        iconSize: [40, 40],
+    var operatingIcon = L.icon({
+        iconUrl: "./icons/isometric greenhouse color.svg",
+        iconSize: [75, 75],
         popupAnchor: [0, -15]
     });
 
-    var koapIcon = L.icon({
-        iconUrl: "./icons/koap.png",
-        iconSize: [40, 40],
+    var inactiveIcon = L.icon({
+        iconUrl: "./icons/isometric greenhouse desat.svg",
+        iconSize: [75, 75],
         popupAnchor: [0, -15]
     });
 
-    var agffaIcon = L.icon({
-        iconUrl: "./icons/agffa.png",
-        iconSize: [40, 40],
-        popupAnchor: [0, -15]
-    });
-
-    var kynurserylicenseIcon = L.icon({
-        iconUrl: "./icons/kynurserylicense.png",
-        iconSize: [40, 40],
-        popupAnchor: [0, -15]
-    });
-
-    var kypproductsIcon = L.icon({
-        iconUrl: "./icons/kypproducts.png",
-        iconSize: [40, 40],
-        popupAnchor: [0, -15]
-    });
-
-    var kgadirectoryIcon = L.icon({
-        iconUrl: "./icons/kgadirectory.png",
+    var unknownIcon = L.icon({
+        iconUrl: "./icons/isometric greenhouse unknown.svg",
         iconSize: [40, 40],
         popupAnchor: [0, -15]
     });
@@ -320,7 +295,7 @@
     // load KY county polygons
   $.getJSON("./data/ky-counties-arc.geojson", function(counties) {
         // load CSV file
-        omnivore.csv('data/KGM_geocoded.csv')
+        omnivore.csv('data/KGM_geocoded2024.csv')
         .on('ready', function(e) {
             // console.log(e.target);
             drawMap(e.target.toGeoJSON());
@@ -336,119 +311,78 @@
 
     // create layer groups by resource type
 
-    var kypgrowerLayer = L.geoJson(data, {
-      filter: kypgrowerFilter,
+    var operatingLayer = L.geoJson(data, {
+      filter: operatingFilter,
       pointToLayer: function(feature,latlng) {
-          return L.marker(latlng, {icon: kypgrowerIcon});
+          return L.marker(latlng, {icon: operatingIcon});
         },
         onEachFeature : function(feature,layer) {
           var props = feature.properties;
           var locationPopup =
-            "<h2>Data Source:<br>"+ props.Data_Source + "<br></h2>" + props.County + " County<br><br>" + "<b>" + props.Organization + "<br></b>"
-            + props.Last_known_Address + "<br><br><b>Contact Information:  <br>" + props.Last_Known_Contact_Name + "<br></b>" + props.Phone + "<br>" + props.Email + "<br>" + props.Web +
-            "<br>Status:  <font color='red'><b>" + props.Status__2023_ + "</p></p>";
+            "<h2>" + props.Organization + "<br><img align='right' src='icons/isometric greenhouse color.svg' height='60' width='60'></h2><p style='font-weight: bold; font-size: 105%; color: #008c4d; text-transform:uppercase'>" + props.Status__2023_
+            + "</p><b>Contact Name:&ensp;<br></b>" + props.Last_Known_Contact_Name
+            + "<br><br><b>Recorded Address:&ensp;</b><br>" + props.Last_known_Address
+            + "<br><br><b>Phone:&ensp;</b>" + props.Phone
+            + "<br><b>Email:&ensp;</b>" + props.Email
+            + "<br><b>Web:&ensp;</b>" + props.Web;
             layer.bindPopup(locationPopup);
           }
       }).addTo(map);
 
-    var kynurserylicenseLayer = L.geoJson(data, {
-      filter: kynurserylicenseFilter,
-      pointToLayer: function(feature,latlng) {
-          return L.marker(latlng, {icon: kynurserylicenseIcon});
-        },
-        onEachFeature : function(feature,layer) {
-          var props = feature.properties;
-          var locationPopup =
-            "<h2>Data Source:<br>"+ props.Data_Source + "<br></h2>" + props.County + " County<br><br>" + "<b>" + props.Organization + "<br></b>"
-            + props.Last_known_Address + "<br><br><b>Contact Information:  <br>" + props.Last_Known_Contact_Name + "<br></b>" + props.Phone + "<br>" + props.Email + "<br>" + props.Web +
-            "<br>Status:  <font color='red'><b>" + props.Status__2023_ + "</p></p>";
-            layer.bindPopup(locationPopup);
-        }
-      }).addTo(map);
-
-    var koapLayer = L.geoJson(data, {
-      filter: koapFilter,
+    var inactiveLayer = L.geoJson(data, {
+      filter: inactiveFilter,
         pointToLayer: function(feature,latlng) {
-            return L.marker(latlng, {icon: koapIcon});
+            return L.marker(latlng, {icon: inactiveIcon});
           },
           onEachFeature : function(feature,layer) {
             var props = feature.properties;
             var locationPopup =
-             "<h2>Data Source:<br>"+ props.Data_Source + "<br></h2>" + props.County + " County<br><br>" + "<b>" + props.Organization + "<br></b>"
-             + props.Last_known_Address + "<br><br><b>Contact Information:  <br>" + props.Last_Known_Contact_Name + "<br></b>" + props.Phone + "<br>" + props.Email + "<br>" + props.Web +
-             "<br>Status:  <font color='red'><b>" + props.Status__2023_ + "</p></p>";
-             layer.bindPopup(locationPopup);
+            "<h2>" + props.Organization + "<br><img align='right' src='icons/isometric greenhouse desat.svg' height='60' width='60'></h2><p style='font-weight: bold; font-size: 105%; color: #7a7a7a; text-transform:uppercase'>" + props.Status__2023_
+            + "</p><b>Last Known Contact Name:&ensp;<br></b>" + props.Last_Known_Contact_Name
+            + "<br><br><b>Recorded Address:&ensp;</b><br>" + props.Last_known_Address
+            + "<br><br><b>Phone:&ensp;</b>" + props.Phone
+            + "<br><b>Email:&ensp;</b>" + props.Email
+            + "<br><b>Web:&ensp;</b>" + props.Web;
+            layer.bindPopup(locationPopup);
           }
       }).addTo(map);
 
-      var agffaLayer = L.geoJson(data, {
-        filter: agffaFilter,
+      var unknownLayer = L.geoJson(data, {
+        filter: unknownFilter,
           pointToLayer: function(feature,latlng) {
-              return L.marker(latlng, {icon: agffaIcon});
+              return L.marker(latlng, {icon: unknownIcon});
             },
             onEachFeature : function(feature,layer) {
               var props = feature.properties;
               var locationPopup =
-               "<h2>Data Source:<br>"+ props.Data_Source + "<br></h2>" + props.County + " County<br><br>" + "<b>" + props.Organization + "<br></b>"
-               + props.Last_known_Address + "<br><br><b>Contact Information:  <br>" + props.Last_Known_Contact_Name + "<br></b>" + props.Phone + "<br>" + props.Email + "<br>" + props.Web +
-               "<br>Status:  <font color='red'><b>" + props.Status__2023_ + "</p></p>";
+              "<h2>" + props.Organization + "<br><img align='right' src='icons/isometric greenhouse unknown.svg' height='60' width='60'></h2><p style='font-weight: bold; font-size: 105%; color: #8f7632; text-transform:uppercase'>Status:&ensp;" + props.Status__2023_
+             + "</p><b>Data Source:<br></b>" + props.Data_Source
+             + "</p><b>Last Known Contact Name:&ensp;<br></b>" + props.Last_Known_Contact_Name
+             + "<br><br><b>Recorded Address:&ensp;</b><br>" + props.Last_known_Address
+             + "<br><br><b>Phone:&ensp;</b>" + props.Phone
+             + "<br><b>Email:&ensp;</b>" + props.Email
+             + "<br><b>Web:&ensp;</b>" + props.Web;
                layer.bindPopup(locationPopup);
             }
         }).addTo(map);
 
-        var kypproductsLayer = L.geoJson(data, {
-          filter: kypproductsFilter,
-            pointToLayer: function(feature,latlng) {
-                return L.marker(latlng, {icon: kypproductsIcon});
-              },
-              onEachFeature : function(feature,layer) {
-                var props = feature.properties;
-                var locationPopup =
-                  "<h2>Data Source:<br>"+ props.Data_Source + "<br></h2>" + props.County + " County<br><br>" + "<b>" + props.Organization + "<br></b>"
-                  + props.Last_known_Address + "<br><br><b>Contact Information:  <br>" + props.Last_Known_Contact_Name + "<br></b>" + props.Phone + "<br>" + props.Email + "<br>" + props.Web +
-                  "<br>Status:  <font color='red'><b>" + props.Status__2023_ + "</p></p>";
-                  layer.bindPopup(locationPopup);
-              }
-          }).addTo(map);
-
-              var kgadirectoryLayer = L.geoJson(data, {
-                filter: kgadirectoryFilter,
-                  pointToLayer: function(feature,latlng) {
-                      return L.marker(latlng, {icon: kgadirectoryIcon});
-                    },
-                    onEachFeature : function(feature,layer) {
-                      var props = feature.properties;
-                      var locationPopup =
-                        "<h2>Data Source:<br>"+ props.Data_Source + "<br></h2>" + props.County + " County<br><br>" + "<b>" + props.Organization + "<br></b>"
-                        + props.Last_known_Address + "<br><br><b>Contact Information:  <br>" + props.Last_Known_Contact_Name + "<br></b>" + props.Phone + "<br>" + props.Email + "<br>" + props.Web +
-                        "<br>Status:  <font color='red'><b>" + props.Status__2023_ + "</p></p>";
-                        layer.bindPopup(locationPopup);
-                    }
-                }).addTo(map);
-
     // create object of all layers
     var geoJsonLayers = {
-          kypgrowerLayer: kypgrowerLayer,
-          kypproductsLayer: kypproductsLayer,
-          kynurserylicenseLayer: kynurserylicenseLayer,
-          koapLayer: koapLayer,
-          agffaLayer: agffaLayer,
-          kgadirectoryLayer: kgadirectoryLayer,
+         unknownLayer: unknownLayer,
+         operatingLayer: operatingLayer,
+         inactiveLayer: inactiveLayer,
     };
 
     var baseMaps = {
-         "<b>&#9;Simple Black & White</b>" : simpleTile,
-         "<b>&#9;USGS Terrain</b>" : terrainTile
+         "<b>&#9;USGS Topographic</b>" : simpleTile,
+         "<b>&#9;USGS Terrain ESRI</b>" : terrainTile
     };
 
     // legend for turning on/off layers
     var sourcesLabels = {
-      "<img src='icons/kynurserylicense.png' height='20' width='20'><b>&nbsp;Kentucky Nursery Licenses 2021</b>": geoJsonLayers.kynurserylicenseLayer,
-      "<img src='icons/kypgrowericon.png' height='20' width='20'><b>&nbsp;Kentucky Proud Greenhouse Growers 2021</b>": geoJsonLayers.kypgrowerLayer,
-      "<img src='icons/kypproducts.png' height='20' width='20'><b>&nbsp;Kentucky Proud Greenhouse Products 2021</b>": geoJsonLayers.kypproductsLayer,
-      "<img src='icons/agffa.png' height='20' width='20'><b>&nbsp;Ag FFA Instructors, POWER counties</b>": geoJsonLayers.agffaLayer,
-      "<img src='icons/koap.png' height='20' width='20'><b>&nbsp;Shared KOAP Open Record Request Greenhouses</b><br>": geoJsonLayers.koapLayer,
-      "<img src='icons/kgadirectory.png' height='20' width='20'><b>&nbsp;KGA Commercial Directory</b>": geoJsonLayers.kgadirectoryLayer,
+      "<img src='icons/isometric greenhouse color.svg' height='40' width='40'><b>&nbsp;Operating</b>": geoJsonLayers.operatingLayer,
+      "<img src='icons/isometric greenhouse desat.svg' height='40' width='40'><b>&nbsp;Not Operating</b><br>": geoJsonLayers.inactiveLayer,
+      "<img src='icons/isometric greenhouse unknown.svg' height='40' width='40'><b>&nbsp;Unknown Status</b>": geoJsonLayers.unknownLayer,
     };
 
     L.control.layers(baseMaps, sourcesLabels, { collapsed:true }).addTo(map);
@@ -476,28 +410,16 @@
 
 
     // filtering functions for creating multiple layers from single geojson
-    function kypgrowerFilter(feature) {
-      if (feature.properties.Data_Source === "Kentucky Proud Greenhouse Growers 2021") return true
+    function operatingFilter(feature) {
+      if (feature.properties.Status__2023_ === "Operating") return true
     }
 
-    function kynurserylicenseFilter(feature) {
-      if (feature.properties.Data_Source === "Kentucky Nursery Licenses 2021-2022") return true
+    function unknownFilter(feature) {
+      if (feature.properties.Status__2023_ === "Unknown") return true
     }
 
-    function agffaFilter(feature) {
-      if (feature.properties.Data_Source === "Ag FFA Instructors, POWER counties") return true
-    }
-
-    function koapFilter(feature) {
-      if (feature.properties.Data_Source === "KOAP Open Record Req. GHs") return true
-    }
-
-    function kypproductsFilter(feature) {
-      if (feature.properties.Data_Source === "Kentucky Proud Greenhouse Products 2021") return true
-    }
-
-    function kgadirectoryFilter(feature) {
-      if (feature.properties.Data_Source === "KGA Commercial Directory") return true
+    function inactiveFilter(feature) {
+      if (feature.properties.Status__2023_ === "Not Operating") return true
     }
 
   } // end drawMap()
@@ -506,14 +428,14 @@
       var dataLayer = L.geoJson(data, {
         style: style,
         onEachFeature: function (feature, layer) {
-             console.log(feature.properties.ARC_Status);
              if (feature.properties.ARC_Status == null) {
                   layer.bindTooltip("<h2>" + feature.properties.NAME + " County</h2>");
              } else {
-                  layer.bindTooltip("<h3>" + feature.properties.NAME + " County<br>ARC County</h3>");
+                  layer.bindTooltip("<h3>" + feature.properties.NAME + " County - ARC</h3>");
                   layer.setStyle({
                        "color": "#0390fc",
-                       "fillOpacity" : 0.1                       
+                       "stroke": "false",
+                       "fillOpacity" : 0.2
                   });
           }
         }
